@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: devnexus
+  labels:
+    app: order-service
+    project: devnexus
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+        project: devnexus
+    spec:
+      containers:
+        - name: order-service
+          image: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/order-service:1.0
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /orders/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /orders/health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 20
