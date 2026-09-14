@@ -1,0 +1,33 @@
+namespace: devnexus
+
+frontend:
+  name: frontend
+  replicas: 2
+  image:
+    repository: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/frontend
+    tag: "3.3"
+  port: 80
+
+userService:
+  name: user-service
+  replicas: 2
+  image:
+    repository: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/user-service
+    tag: "1.0"
+  port: 8080
+
+productService:
+  name: product-service
+  replicas: 2
+  image:
+    repository: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/product-service
+    tag: "1.0"
+  port: 8000
+
+orderService:
+  name: order-service
+  replicas: 2
+  image:
+    repository: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/order-service
+    tag: "1.0"
+  port: 3000
