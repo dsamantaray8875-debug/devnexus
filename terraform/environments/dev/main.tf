@@ -45,6 +45,21 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = module.vpc.private_subnet_ids
 }
+module "eks" {
+  source = "../../modules/eks"
+
+  project_name       = var.project_name
+  environment        = var.environment
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.public_subnet_ids
+
+  cluster_version    = "1.34"
+  node_instance_type = "t3.medium"
+
+  desired_nodes = 2
+  min_nodes     = 2
+  max_nodes     = 2
+}
 module "security_groups" {
   source = "../../modules/security-groups"
 
