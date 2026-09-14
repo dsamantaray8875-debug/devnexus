@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: devnexus
+  labels:
+    app: frontend
+    project: devnexus
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
