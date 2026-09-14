@@ -44,3 +44,11 @@ Thumbs.db
 *.tmp
 *.swp
 tfplan
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+.pytest_cache/
