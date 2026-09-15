@@ -1,78 +1,302 @@
 # DevNexus — Enterprise Cloud DevOps Platform on AWS
 
-DevNexus is a production-style cloud-native DevOps platform built on AWS.
+## Project Status
+
+DevNexus is a full-stack cloud-native DevOps project deployed on AWS.
+
+- AWS VPC & IAM — Complete
+- Terraform — Complete
+- Amazon EKS — Complete
+- Java Spring Boot User Service — Complete
+- Python FastAPI Product Service — Complete
+- Node.js Express Order Service — Complete
+- React Frontend — Complete
+- Docker & Amazon ECR — Complete
+- Kubernetes — Complete
+- Helm — Complete
+- Argo CD / GitOps — Synced & Healthy
+- Metrics Server — Working
+- Prometheus — Running
+- Grafana — Running
+- Kubernetes HPA — Working
+- Kubernetes RBAC — Complete
+- GitHub — Complete
 
 ## Architecture
 
-Developer
-   ↓
-GitHub
-   ↓
-CI/CD
-   ↓
-Docker
-   ↓
-Amazon ECR
-   ↓
+Users
+  |
+  v
+AWS Application Load Balancer
+  |
+  v
 Amazon EKS
-   ↓
-Microservices
-   ↓
-AWS Services
-   ↓
-Prometheus + Grafana + EFK
+  |
+  +--> React Frontend
+  |
+  +--> Java Spring Boot User Service
+  |
+  +--> Python FastAPI Product Service
+  |
+  +--> Node.js Express Order Service
+  |
+  +--> Prometheus + Grafana
 
-## Technology Stack
+## DevOps Flow
 
-- AWS
-- Linux
-- Git & GitHub
-- Terraform
-- Docker
-- Amazon ECR
-- Kubernetes
+Developer
+  |
+  v
+GitHub
+  |
+  v
+CI/CD
+  |
+  v
+Docker
+  |
+  v
+Amazon ECR
+  |
+  v
+Helm
+  |
+  v
+Argo CD / GitOps
+  |
+  v
+Amazon EKS
+
+## AWS Infrastructure
+
+- Amazon VPC
+- Public and Private Subnets
+- IAM
 - Amazon EKS
-- Helm
-- GitHub Actions
-- Jenkins
-- Argo CD
-- Prometheus
-- Grafana
-- EFK
-- DevSecOps
-- Infrastructure as Code
-- GitOps
+- EC2 Worker Nodes
+- Application Load Balancer
+- Amazon ECR
+- Amazon RDS
+- Amazon ElastiCache
 
 ## Microservices
 
-- React Frontend
-- Java Spring Boot User Service
-- Python FastAPI Product Service
-- Node.js Order Service
+### User Service
 
-## Project Roadmap
+Java 17 + Spring Boot
 
-1. Linux & Git
-2. AWS Fundamentals
-3. Terraform
-4. VPC & Networking
-5. IAM & Security
-6. Microservices
-7. Docker
-8. Amazon ECR
-9. Kubernetes
-10. Amazon EKS
-11. Helm
-12. GitHub Actions
-13. Jenkins
-14. Argo CD & GitOps
-15. Prometheus & Grafana
-16. EFK Logging
-17. DevSecOps
-18. High Availability & Autoscaling
-19. Disaster Recovery
-20. Cost Optimization
+Endpoints:
 
-## Goal
+- /users
+- /users/health
 
-Build a complete enterprise-style AWS DevOps project suitable for real-world learning, portfolio demonstration, and DevOps interview preparation.
+### Product Service
+
+Python + FastAPI
+
+Endpoints:
+
+- /products
+- /products/health
+
+### Order Service
+
+Node.js + Express
+
+Endpoints:
+
+- /orders
+- /orders/health
+
+### Frontend
+
+React + Vite + Nginx
+
+The frontend communicates with backend microservices through Kubernetes services.
+
+## Docker
+
+Applications are containerized using Docker.
+
+Images:
+
+- devnexus/frontend
+- devnexus/user-service
+- devnexus/product-service
+- devnexus/order-service
+
+Images are stored in Amazon ECR.
+
+## Kubernetes
+
+The application runs on Amazon EKS using:
+
+- Deployments
+- Services
+- ConfigMaps
+- Secrets
+- HPA
+- RBAC
+- Health checks
+- CPU and memory requests/limits
+
+Application namespace:
+
+devnexus
+
+## Helm
+
+The application is packaged as a Helm chart.
+
+Path:
+
+helm/devnexus
+
+Helm manages:
+
+- Frontend
+- User Service
+- Product Service
+- Order Service
+- HPA
+- Kubernetes configuration
+
+## GitOps
+
+Argo CD continuously monitors the GitHub repository and deploys the Helm application to Amazon EKS.
+
+GitHub
+  |
+  v
+Argo CD
+  |
+  v
+Helm
+  |
+  v
+Amazon EKS
+
+Argo CD status:
+
+Synced
+Healthy
+
+## Monitoring
+
+Monitoring stack:
+
+- Prometheus
+- Grafana
+- Metrics Server
+- Node Exporter
+- kube-state-metrics
+- Alertmanager
+
+Prometheus collects Kubernetes metrics and Grafana provides visualization.
+
+## Autoscaling
+
+Frontend HPA:
+
+- Minimum replicas: 2
+- Maximum replicas: 4
+- CPU target: 70%
+
+## Security
+
+Security implementation includes:
+
+- IAM
+- Kubernetes RBAC
+- Kubernetes ServiceAccounts
+- Security Groups
+- Kubernetes Secrets
+- Container security structure
+
+## Repository Structure
+
+devnexus/
+├── applications/
+├── docker/
+├── terraform/
+├── kubernetes/
+├── helm/
+├── gitops/
+├── jenkins/
+├── monitoring/
+├── logging/
+├── security/
+├── docs/
+├── scripts/
+└── tests/
+
+## Technology Stack
+
+AWS
+Terraform
+Linux
+Git
+GitHub
+Docker
+Amazon ECR
+Kubernetes
+Amazon EKS
+Helm
+Argo CD
+Jenkins
+GitHub Actions
+Java
+Spring Boot
+Python
+FastAPI
+Node.js
+Express
+React
+Prometheus
+Grafana
+RBAC
+DevSecOps
+Microservices
+
+## Validation
+
+Application workloads:
+
+frontend          2/2
+user-service      2/2
+product-service   2/2
+order-service     2/2
+
+Argo CD:
+
+Synced
+Healthy
+
+HPA:
+
+Minimum replicas: 2
+Maximum replicas: 4
+CPU target: 70%
+
+## Interview Explanation
+
+DevNexus demonstrates an end-to-end DevOps workflow on AWS.
+
+Infrastructure is provisioned using Terraform. Applications are containerized using Docker and stored in Amazon ECR. Kubernetes workloads run on Amazon EKS and are packaged using Helm.
+
+Argo CD implements GitOps by continuously synchronizing the Kubernetes environment with the GitHub repository.
+
+Prometheus and Grafana provide monitoring, while Kubernetes HPA provides application autoscaling.
+
+The project demonstrates practical knowledge of AWS, Terraform, Docker, Kubernetes, EKS, Helm, GitOps, CI/CD, monitoring, security and microservices.
+
+## Author
+
+Deepak Kumar Samantaray
+
+GitHub:
+https://github.com/dsamantaray8875-debug
+
+## Project
+
+DevNexus — Enterprise Cloud DevOps Platform on AWS
