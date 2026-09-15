@@ -31,3 +31,9 @@ orderService:
     repository: 362928919640.dkr.ecr.us-east-1.amazonaws.com/devnexus/order-service
     tag: "1.0"
   port: 3000
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  cpuUtilization: 70
